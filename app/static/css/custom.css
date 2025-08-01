@@ -1,0 +1,163 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0; /* Убираем отступы по умолчанию */
+}
+
+.my_size {
+    display: inline-block; /* Делаем элементы строчными блоками */
+    border: 1px solid #ccc; /* Добавляем рамку для наглядности */
+    padding: 5px; /* Добавляем отступы */
+    margin: 5px; /* Добавляем внешние отступы */
+    width: 30px; /* Устанавливаем ширину элемента */
+    background-color: #fff; /* Белый фон для элементов */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень для элементов */
+    transition: transform 0.2s; /* Плавный переход для эффекта наведения */
+    font-size: 15px;
+}
+
+.my_size:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    margin: 20px 0; /* Отступ сверху и снизу */
+}
+
+.pagination-container a {
+    margin: 0 5px; /* Отступ между ссылками */
+    text-decoration: none; /* Убираем подчеркивание */
+    color: #007bff; /* Цвет ссылок */
+}
+
+.pagination-container a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.btn {
+    background-color: gray; /* Цвет кнопки */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+    margin-left: 15px; /* Отступ слева */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+.btn:hover {
+    background-color: darkgray; /* Изменение цвета при наведении */
+}
+
+.dropdown {
+    position: relative; /* Позволяет дочерним элементам позиционироваться относительно этой обертки */
+    display: inline-block; /* Чтобы кнопка и меню находились в одной строке */
+}
+
+/* Основные стили для выпадающего меню */
+.dropdown-content {
+    display: none; /* Скрыто по умолчанию */
+    position: absolute; /* Позволяет позиционировать меню относительно родителя */
+    left: 50%; /* Позиция по горизонтали */
+    transform: translateX(-50%); /* Сдвигаем меню влево на половину его ширины */
+    background-color: #333; /* Черный фон */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px; /* Скругленные углы */
+    transition: opacity 0.3s ease; /* Плавный переход */
+    opacity: 0; /* Начальная непрозрачность */
+    width: 100%;
+}
+
+/* Показать меню с эффектом */
+.dropdown-content.show {
+    display: block; /* Показываем при добавлении класса .show */
+    opacity: 1; /* Полная непрозрачность */
+}
+
+/* Стили для навигации */
+.nav {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем отступы */
+    margin: 0; /* Убираем отступы */
+   /* Убираем поля */
+    flex-direction: column; /* Вертикальное расположение элементов */
+    width: 100%; /* Занимаем всю ширину родительского контейнера */
+    margin-bottom: 10px;
+}
+
+.nav-item {
+    text-align: left;
+    width: 100%; /* Занимаем всю ширину родительского контейнера */
+}
+
+.nav-link {
+    padding: 12px 16px; /* Отступы для ссылок */
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: block; /* Делаем ссылки блочными для полного клика */
+    transition: background-color 0.3s;
+
+   }
+
+
+
+
+.my-4 {
+padding-top:25px
+}
+
+
+
+.custom-button {
+    background-color: #6c757d; /* Серый цвет фона */
+    color: white; /* Цвет текста */
+    padding: 8px 16px; /* Уменьшенные отступы */
+    border: none; /* Убираем рамку */
+    border-radius: 5px; /* Закругленные углы */
+    font-size: 14px; /* Меньший размер шрифта */
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход */
+    z-index: 100; /* Убедитесь, что кнопка выше других элементов */
+}
+
+/* Стили при наведении */
+.custom-button:hover {
+    background-color: #5a6268; /* Цвет фона при наведении */
+}
+
+/* Стили при нажатии */
+.custom-button:active {
+    background-color: #495057;
+
+.container {
+    display: flex; /* Или grid */
+    gap: 20px; /* Вместо margin-bottom */
+}
+
+.cloth-item {
+    display: flex; /* Используем Flexbox для выравнивания */
+    align-items: center; /* Центрирует элементы по вертикали */
+}
+
+.cloth-item h5 {
+    margin: 0; /* Убираем отступы по умолчанию */
+    font-size: 1.5em; /* Увеличиваем размер шрифта для "новинки" */
+    width: auto; /* Устанавливаем автоматическую ширину */
+}
+
+.cloth-item a {
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    font-size: 1.5em; /* Размер шрифта для иконки "корзины" */
+    color: #000; /* Цвет текста для ссылки */
+    margin-left: 10px; /* Отступ между элементами */
+}
+
+.cloth-item a:hover {
+    color: #007BFF; /* Изменяем цвет при наведении */
+}

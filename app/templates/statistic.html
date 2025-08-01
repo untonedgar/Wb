@@ -1,0 +1,34 @@
+{% extends 'default.html' %}
+
+{% csrf_token %}
+
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4"><small></small></h1>
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4 col-sm-6 portfolio-item mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title">
+
+                       {{ product.name}}
+                    </h6>
+
+                    <div class="card-text">
+                        <a href="https://www.wildberries.by/catalog/{{product.article}}/detail.aspx"><p class="mb-1"><strong>Артикул:</strong> {{ product.article}}</p></a>
+                        <p class="mb-1"><strong>Цена:</strong> {{ product.price}}</p>
+                        <p class="mb-1"><strong>Cтарая:</strong> {{product.old_price}}</p>
+                        <p class="mb-1"><strong>Рейтинг:</strong> {{ product.rating}}</p>
+                        <p class="text-muted small mb-2">Отзывов: {{ product.reviews}}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+ {% endblock content %}
