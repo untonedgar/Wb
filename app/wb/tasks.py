@@ -1,5 +1,5 @@
 from celery import shared_task
-from wb.utils.parser import WildberriesParser
+from wb.utils.parser import ChromeDriverProvider, WildberriesParser, WildberriesProductParser, DjangoProductRepository
 import logging
 from tenacity import retry, stop_after_attempt, wait_exponential
 from django.core.cache import cache
@@ -13,11 +13,14 @@ logger = logging.getLogger(__name__)
     retry_backoff=True,               # экспоненциальная задержка
     retry_kwargs={'max_retries': 3},  # максимум 3 попытки
 )
-def parse_wildberries_task(self, text):
+def parse_wildberries_task(self, url):
     parser = None
     try:
-        parser = WildberriesParser()
-        result = parser.parse(text)
+        driver_provider = ChromeDriverProvider()
+        product_parser = WildberriesProductParser()
+        repository = DjangoProductRepository()
+        WbParser = WildberriesParser(driver_provider, product_parser, repository)
+        result = WbParser.parse(url)
         return result
     except Exception as e:
         logger.exception(f"Ошибка при парсинге WB: {e}")
