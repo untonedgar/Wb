@@ -9,15 +9,14 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import WebDriverException, TimeoutException
 from django.db import transaction
 from selenium.webdriver.support.wait import WebDriverWait
-
+from selenium.webdriver.chrome.service import Service
 
 class WildberriesParser:
 
     def __init__(self):
-
-        self.driver = None
+        self.driver = None  # ✅ обязательно инициализируем
         self.parsed_ids = set()
-        self.max_products = 100  # Лимит товаров для парсинга
+        self.max_products = 100
         self._setup_driver()
 
     def _setup_driver(self):
@@ -25,18 +24,27 @@ class WildberriesParser:
         try:
             if self.driver is not None:
                 self.driver.quit()
+
             options = Options()
-            options.add_argument("--disable-logging")  # Добавлено для чистоты логов
-            options.add_experimental_option("excludeSwitches", ["enable-logging"])  # Отключает ненужные логи
-            options.add_argument("--headless==new")
+            options.add_argument("--headless=new")  # ✅ исправлено (одно =)
+            options.add_argument("--no-sandbox")  # обязательно в Docker
+            options.add_argument("--disable-dev-shm-usage")  # важно для docker
+            options.add_argument("--disable-gpu")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-software-rasterizer")
             options.add_argument("--disable-blink-features=AutomationControlled")
-            options.add_argument("user-agent=Real-User-Agent")
-            options.add_argument('--disable-background-networking')  # Отключает фоновые запросы
-            options.add_argument('--disable-default-apps')  # Отключает стандартные приложения
-            options.add_argument('--disable-gcm')  # Явно отключает GCM
-            options.add_argument('--disable-sync')  # Отключает синхронизацию с Google
-            options.add_experimental_option("excludeSwitches", ["enable-automation"])
-            self.driver = webdriver.Chrome(options=options)
+            options.add_argument("--window-size=1920,1080")
+            options.add_argument("--disable-logging")
+            options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36")
+
+            chrome_driver_path = os.getenv("CHROMEDRIVER_PATH", "/usr/bin/chromedriver")
+            chrome_bin = os.getenv("CHROME_BIN", "/usr/bin/chromium")
+
+            options.binary_location = chrome_bin  # <-- Важно!
+
+            service = Service(chrome_driver_path)
+            self.driver = webdriver.Chrome(service=service, options=options)
             self.driver.get("about:blank")
             return True
         except WebDriverException as e:
@@ -108,9 +116,7 @@ class WildberriesParser:
             print(f"[Ошибка парсинга] {str(e)[:100]}...")
             return None
 
-
     def parse(self, url):
-        """Основной метод парсинга"""
         self._validate_driver()
         try:
             self.driver.get(url)
@@ -130,7 +136,9 @@ class WildberriesParser:
                     continue
                 # Прокрутка страницы
                 self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                time.sleep(2)  # Ожидание подгрузки
+                WebDriverWait(self.driver, 10).until(
+                    lambda d: d.execute_script("return document.readyState") == "complete"
+                )  # Ожидание подгрузки
 
                 try:
                     load_more = WebDriverWait(self.driver, 3).until(

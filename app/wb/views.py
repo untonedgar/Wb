@@ -11,7 +11,7 @@ from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match, Fuzzy
 from elasticsearch_dsl.connections import connections
 from elasticsearch import ApiError, ConnectionError as ESConnectionError
-
+from wb.tasks import parse_wildberries_task
 
 class GenerateHtmlView(View):
     """Генерирует HTML-страницу с динамическим контентом"""
@@ -22,8 +22,8 @@ class GenerateHtmlView(View):
             return {}
         else:
             user_text = handler(user_text)
-            self.parser = WildberriesParser()
-            self.parser.parse(f'{user_text}')
+            task = parse_wildberries_task.delay(user_text)
+            return {"task_id": task.id, "user_text": user_text}
 
     def get(self, request):
         context = self.get_initial_data(request)
@@ -71,14 +71,10 @@ class ProductSearchView(ListView):
                         'query': query,
                         'fuzziness': 'AUTO',
                         'operator': 'or',
-                        'analyzer': 'russian'
                     }),
 
                     # Поиск по N-граммам для частичных совпадений
-                    Q('match', name__ngram={
-                        'query': query,
-                        'boost': 0.5
-                    })
+                    Q('match', **{'name.ngram': {'query': query, 'boost': 0.5}})
                 ],
                 minimum_should_match=1
             )

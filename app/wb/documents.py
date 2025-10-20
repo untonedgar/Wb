@@ -44,7 +44,7 @@ class ProductDocument(Document):
                     'edge_ngram_filter': {
                         'type': 'edge_ngram',
                         'min_gram': 2,
-                        'max_gram': 15
+                        'max_gram': 30
                     },
 
                 }
