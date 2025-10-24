@@ -22,4 +22,5 @@ urlpatterns = [
     path('wb/', include('wb.urls')),
     path('accounts/', include('allauth.urls')),
     path('sign/', include('sign.urls')),
+    path('', include('chat.urls')),
 ]

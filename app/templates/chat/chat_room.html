@@ -1,0 +1,28 @@
+{% extends 'default.html' %}
+
+{% csrf_token %}
+
+
+{% block content %}
+<div id="chat-box"></div>
+<input type="text" id="message-input" placeholder="Введите сообщение..." />
+<button id="send-btn">Отправить</button>
+
+<script>
+    const chatId = "{{ chat.id }}";
+    const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${chatId}/`);
+
+    socket.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML += `<p><b>${data.author}:</b> ${data.message}</p>`;
+    };
+
+    document.getElementById('send-btn').onclick = function () {
+        const input = document.getElementById('message-input');
+        socket.send(JSON.stringify({ message: input.value }));
+        input.value = '';
+    };
+</script>
+
+ {% endblock content %}

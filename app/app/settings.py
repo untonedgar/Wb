@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
+    'channels',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+ASGI_APPLICATION = 'app.asgi.application'
 
 
 # Database
@@ -147,10 +148,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': os.environ.get('ES_HOST'),
+        'hosts': [os.environ.get('ES_HOST', 'http://localhost:9200')],
         'timeout': 30
     },
 }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            # Используем отдельную базу Redis, чтобы не конфликтовать с Celery
+            "hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379/2')],
+        },
+    },
+}
+
 
 LOGIN_URL = '/wb/'
 LOGIN_REDIRECT_URL = '/wb/'

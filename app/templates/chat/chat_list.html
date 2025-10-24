@@ -1,0 +1,45 @@
+{% extends 'default.html' %}
+
+{% csrf_token %}
+
+
+{% block content %}
+<h2>Чаты поддержки</h2>
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Клиент</th>
+        <th>Менеджер</th>
+        <th>Статус</th>
+        <th>Последнее сообщение</th>
+        <th>Действие</th>
+    </tr>
+    {% for chat in chats %}
+    <tr>
+        <td>{{ chat.id }}</td>
+        <td>{{ chat.customer.username }}</td>
+        <td>{{ chat.manager.username|default:"-" }}</td>
+        <td>
+            {% if chat.status == "new" %}
+                🟢 Новый
+            {% elif chat.status == "active" %}
+                🟡 В работе
+            {% else %}
+                ⚫ Закрыт
+            {% endif %}
+        </td>
+        <td>{{ chat.last_message_at|date:"d.m.Y H:i" }}</td>
+        <td>
+            {% if chat.status != "closed" %}
+                <a href="{% url 'chat_room' chat.id %}">Открыть</a>
+            {% else %}
+                <span>Закрыт</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">Нет активных чатов</td></tr>
+    {% endfor %}
+</table>
+
+ {% endblock content %}
