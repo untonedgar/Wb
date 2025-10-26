@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый чат от клиента</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 30px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 30px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            padding: 15px 0;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">💬 Новый чат поддержки</div>
+        <div class="content">
+            <p>Пользователь <strong>{{ customer }}</strong> создал новый чат с поддержкой.</p>
+            <p>Пожалуйста, перейдите по ссылке ниже, чтобы ответить клиенту:</p>
+            <a href="{{ domain }}/chat/{{ chat_id }}/" class="button">Открыть чат</a>
+        </div>
+        <div class="footer">
+            Это автоматическое уведомление от системы поддержки.<br>
+            Не отвечайте на это письмо.
+        </div>
+    </div>
+</body>
+</html>
