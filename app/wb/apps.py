@@ -13,7 +13,7 @@ class WbConfig(AppConfig):
 
         connections.create_connection(
             alias='default',
-            hosts=[settings.ELASTICSEARCH_DSL['default']['hosts']],
+            hosts=settings.ELASTICSEARCH_DSL['default']['hosts'],
             timeout=settings.ELASTICSEARCH_DSL['default']['timeout']
         )
 

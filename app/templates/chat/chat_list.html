@@ -4,42 +4,187 @@
 
 
 {% block content %}
-<h2>Чаты поддержки</h2>
-<table border="1" cellpadding="8">
-    <tr>
+<style>
+  body {
+    background: #f5f7fb;
+    font-family: "Inter", system-ui, sans-serif;
+  }
+
+  .chat-list-page {
+    max-width: 1000px;
+    margin: 80px auto 60px; /* отступ сверху под навигацию */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(20, 23, 39, 0.08);
+    padding: 24px 32px;
+    border: 1px solid #e5e9ef;
+  }
+
+  .chat-list-page h2 {
+    text-align: center;
+    color: #1e293b;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  table.chat-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .chat-table th, .chat-table td {
+    padding: 14px 12px;
+    text-align: left;
+    font-size: 15px;
+    border-bottom: 1px solid #eef2f7;
+  }
+
+  .chat-table th {
+    background: #f9fafc;
+    color: #475569;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+
+  .chat-table tr:hover {
+    background: #f8fafc;
+    transition: background 0.15s ease-in-out;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .status-new {
+    background: #dcfce7;
+    color: #166534;
+  }
+  .status-active {
+    background: #fef9c3;
+    color: #854d0e;
+  }
+  .status-closed {
+    background: #e2e8f0;
+    color: #334155;
+  }
+
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-open {
+    background: #6366f1;
+    color: #fff;
+  }
+  .btn-open:hover {
+    background: #4f46e5;
+  }
+
+  .btn-closed {
+    background: #e2e8f0;
+    color: #64748b;
+    cursor: default;
+  }
+
+  .btn-close {
+    background: #ef4444;
+    color: #fff;
+    margin-left: 6px;
+  }
+  .btn-close:hover {
+    background: #dc2626;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  .no-chats {
+    text-align: center;
+    color: #94a3b8;
+    padding: 24px;
+    font-size: 15px;
+  }
+</style>
+
+<div class="chat-list-page">
+  <h2>💬 Чаты поддержки</h2>
+
+  {% if chats %}
+  <table class="chat-table">
+    <thead>
+      <tr>
         <th>ID</th>
         <th>Клиент</th>
         <th>Менеджер</th>
         <th>Статус</th>
         <th>Последнее сообщение</th>
         <th>Действие</th>
-    </tr>
-    {% for chat in chats %}
-    <tr>
-        <td>{{ chat.id }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for chat in chats %}
+      <tr>
+        <td>#{{ chat.id }}</td>
         <td>{{ chat.customer.username }}</td>
-        <td>{{ chat.manager.username|default:"-" }}</td>
+        <td>{{ chat.manager.username|default:"—" }}</td>
         <td>
-            {% if chat.status == "new" %}
-                🟢 Новый
-            {% elif chat.status == "active" %}
-                🟡 В работе
-            {% else %}
-                ⚫ Закрыт
-            {% endif %}
+          {% if chat.status == "new" %}
+            <span class="status-badge status-new">🟢 Новый</span>
+          {% elif chat.status == "active" %}
+            <span class="status-badge status-active">🟡 В работе</span>
+          {% else %}
+            <span class="status-badge status-closed">⚫ Закрыт</span>
+          {% endif %}
         </td>
-        <td>{{ chat.last_message_at|date:"d.m.Y H:i" }}</td>
         <td>
+          {% if chat.last_message_at %}
+            {{ chat.last_message_at|date:"d.m.Y H:i" }}
+          {% else %}
+            —
+          {% endif %}
+        </td>
+        <td>
+          <div class="action-buttons">
             {% if chat.status != "closed" %}
-                <a href="{% url 'chat_room' chat.id %}">Открыть</a>
+              <a href="{% url 'chat_room' chat.id %}" class="btn btn-open">Открыть</a>
+
+              {% if user.is_staff or user.is_superuser %}
+              <form method="post" action="{% url 'close_chat' chat.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-close">Закрыть</button>
+              </form>
+              {% endif %}
             {% else %}
-                <span>Закрыт</span>
+              <span class="btn btn-closed">Закрыт</span>
             {% endif %}
+          </div>
         </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="6">Нет активных чатов</td></tr>
-    {% endfor %}
-</table>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <div class="no-chats">Нет активных чатов</div>
+  {% endif %}
+</div>
 
  {% endblock content %}

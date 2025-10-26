@@ -1,4 +1,6 @@
 import json
+from django.utils import timezone
+
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 from chat.models import Chat, Message
@@ -9,23 +11,27 @@ from channels.db import database_sync_to_async
 logger = logging.getLogger(__name__)
 
 
-
-
-
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.chat_id = self.scope['url_route']['kwargs']['chat_id']
         self.user = self.scope["user"]
 
-        self.chat = await database_sync_to_async(Chat.objects.get)(id=self.chat_id)
+        self.chat = await self.get_chat()
 
-        # Проверяем, имеет ли пользователь доступ к чату
-        if self.user != self.chat.customer and self.user != self.chat.manager:
+
+        if not self.chat:
             await self.close()
             return
 
-        if self.user == self.chat.manager:
-            await database_sync_to_async(self.update_status)("active")
+        # Проверяем, имеет ли пользователь доступ к чату
+        has_access = await self.user_has_access()
+        if not has_access:
+            await self.close()
+            return
+
+        # Если менеджер — обновляем статус
+        if await self.is_manager():
+            await self.update_status("active")
 
         self.room_group_name = f"chat_{self.chat_id}"
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
@@ -48,7 +54,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             author=self.user,
             content=message,
         )
-        await database_sync_to_async(self.update_last_message)()
+        await self.update_last_message()
 
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -59,11 +65,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    # async def chat_message(self, event):
-    #     await self.send(text_data=json.dumps({
-    #         'message': event['message'],
-    #         'author': event['author'],
-    #     }))
+    async def chat_message(self, event):
+        await self.send(text_data=json.dumps({
+            "message": event["message"],
+            "author": event["author"],
+        }))
 
     @database_sync_to_async
     def update_status(self, status):
@@ -71,6 +77,26 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.chat.save(update_fields=['status'])
 
     @database_sync_to_async
+    def user_has_access(self):
+        return self.user == self.chat.customer or self.user == self.chat.manager
+
+    @database_sync_to_async
     def update_last_message(self):
         self.chat.last_message_at = timezone.now()
         self.chat.save(update_fields=['last_message_at'])
+
+    @database_sync_to_async
+    def is_manager(self):
+        return self.user == self.chat.manager
+
+    @database_sync_to_async
+    def is_manager(self):
+        return self.user == self.chat.manager
+
+
+    @database_sync_to_async
+    def get_chat(self):
+        try:
+            return Chat.objects.select_related("customer", "manager").get(id=self.chat_id)
+        except Chat.DoesNotExist:
+            return None
