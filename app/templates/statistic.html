@@ -4,31 +4,161 @@
 
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4"><small></small></h1>
+<style>
+    /* Общий контейнер */
+    .content-wrapper {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 30px 20px; /* чуть меньше отступов сверху/снизу */
+    }
 
-    <div class="row">
-        {% for product in products %}
-        <div class="col-lg-4 col-sm-6 portfolio-item mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h6 class="card-title">
+    /* Заголовок */
+    .page-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 600;
+        color: #1e3a8a;
+        margin-bottom: 25px;
+        margin-top: 10px; /* небольшой отступ сверху для воздуха */
+    }
 
-                       {{ product.name}}
-                    </h6>
+    /* Поисковая форма */
+    .search-box {
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 25px 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 35px;
+    }
 
-                    <div class="card-text">
-                        <a href="https://www.wildberries.by/catalog/{{product.article}}/detail.aspx"><p class="mb-1"><strong>Артикул:</strong> {{ product.article}}</p></a>
-                        <p class="mb-1"><strong>Цена:</strong> {{ product.price}}</p>
-                        <p class="mb-1"><strong>Cтарая:</strong> {{product.old_price}}</p>
-                        <p class="mb-1"><strong>Рейтинг:</strong> {{ product.rating}}</p>
-                        <p class="text-muted small mb-2">Отзывов: {{ product.reviews}}</p>
+    .search-box label {
+        font-weight: 600;
+        color: #1e40af;
+        margin-bottom: 8px;
+        display: block;
+    }
 
+    .search-box input {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 16px;
+        transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+    }
+
+    .search-box button {
+        margin-top: 15px;
+        background: linear-gradient(90deg, #3b82f6, #06b6d4);
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 999px;
+        transition: all 0.2s;
+    }
+
+    .search-box button:hover {
+        background: linear-gradient(90deg, #2563eb, #0891b2);
+    }
+
+    /* Карточки товаров */
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+
+    .card-title {
+        color: #1e3a8a;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .card-text p {
+        margin-bottom: 6px;
+        color: #374151;
+    }
+
+    .card-text a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card-text a:hover {
+        color: #2563eb;
+    }
+
+    /* Исправление для навигации */
+    body {
+        background-color: #f9fafb;
+    }
+
+    main {
+        margin-top: 20px; /* раньше было 100px → подвинул вверх */
+    }
+
+    @media (max-width: 768px) {
+        main {
+            margin-top: 80px; /* чуть больше отступа для мобильных */
+        }
+    }
+</style>
+
+
+<main>
+    <div class="content-wrapper">
+        <h1 class="page-title">Поиск товаров</h1>
+
+        <!-- Поисковая форма -->
+        <div class="search-box">
+            <form method="get" action="{% url 'product_search' %}">
+                {% csrf_token %}
+                <label for="cityInput">Введите товары для поиска</label>
+                <input type="text"
+                       id="cityInput"
+                       name="q"
+                       value="{{ query|default:'' }}"
+                       placeholder="Например: Сапоги"
+                       required>
+                <button type="submit">Подтвердить</button>
+            </form>
+        </div>
+
+        <!-- Список товаров -->
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ product.name }}</h6>
+                        <div class="card-text">
+                            <a href="https://www.wildberries.by/catalog/{{product.article}}/detail.aspx">
+                                <p><strong>Артикул:</strong> {{ product.article }}</p>
+                            </a>
+                            <p><strong>Цена:</strong> {{ product.price }}</p>
+                            <p><strong>Старая цена:</strong> {{ product.old_price }}</p>
+                            <p><strong>Рейтинг:</strong> {{ product.rating }}</p>
+                            <p class="text-muted small">Отзывов: {{ product.reviews }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</main>
  {% endblock content %}

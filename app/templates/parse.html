@@ -1,0 +1,105 @@
+{% extends 'default.html' %}
+
+{% csrf_token %}
+
+
+{% block content %}
+
+<div class="parser-container">
+    <div class="parser-box">
+        <h2 class="parser-title">Введите товары для парсинга</h2>
+        <form method="get" action="">
+            {% csrf_token %}
+            <label for="cityInput" class="parser-label">Название товара</label>
+            <input type="text"
+                   id="cityInput"
+                   name="user_text"
+                   placeholder="Например: Сапоги"
+                   required>
+            <button type="submit">Подтвердить</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .parser-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 20px;
+        background: #f9fafb;
+        min-height: 80vh;
+    }
+
+    .parser-box {
+        background: #ffffff;
+        padding: 40px 50px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .parser-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .parser-title {
+        font-size: 24px;
+        color: #1e3a8a;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .parser-label {
+        font-weight: 600;
+        color: #1e40af;
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    .parser-box input {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 12px 14px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        transition: all 0.2s ease;
+    }
+
+    .parser-box input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+    }
+
+    .parser-box button {
+        background: linear-gradient(90deg, #3b82f6, #06b6d4);
+        border: none;
+        border-radius: 999px;
+        color: white;
+        font-weight: 600;
+        padding: 10px 26px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .parser-box button:hover {
+        background: linear-gradient(90deg, #2563eb, #0891b2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+</style>
+
+
+ {% endblock content %}
+
+
+

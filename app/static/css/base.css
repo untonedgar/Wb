@@ -1,0 +1,11 @@
+body {
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
+    margin: 0;
+    padding-top: 80px;
+}
+
+.content-wrapper {
+    min-height: 80vh;
+}

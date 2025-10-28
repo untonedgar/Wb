@@ -27,7 +27,7 @@ class GenerateHtmlView(View):
 
     def get(self, request):
         context = self.get_initial_data(request)
-        return render(request, 'main.html', context)
+        return render(request, 'parse.html', context)
 
 
 class ProductsView(ListView):
