@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 {% csrf_token %}
 
 
@@ -126,18 +127,18 @@
 </style>
 
 <div class="chat-list-page">
-  <h2>💬 Чаты поддержки</h2>
+  <h2>💬 {% trans 'Чаты поддержки' %}</h2>
 
   {% if chats %}
   <table class="chat-table">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Клиент</th>
-        <th>Менеджер</th>
-        <th>Статус</th>
-        <th>Последнее сообщение</th>
-        <th>Действие</th>
+        <th>{% trans 'Клиент' %}</th>
+        <th>{% trans 'Менеджер' %}</th>
+        <th>{% trans 'Статус' %}</th>
+        <th>{% trans 'Последнее сообщение' %}</th>
+        <th>{% trans 'Действие' %}</th>
       </tr>
     </thead>
     <tbody>
@@ -148,11 +149,11 @@
         <td>{{ chat.manager.username|default:"—" }}</td>
         <td>
           {% if chat.status == "new" %}
-            <span class="status-badge status-new">🟢 Новый</span>
+            <span class="status-badge status-new">🟢 {% trans 'Новый' %}</span>
           {% elif chat.status == "active" %}
-            <span class="status-badge status-active">🟡 В работе</span>
+            <span class="status-badge status-active">🟡 {% trans 'В работе' %}</span>
           {% else %}
-            <span class="status-badge status-closed">⚫ Закрыт</span>
+            <span class="status-badge status-closed">⚫ {% trans 'Закрыт' %}</span>
           {% endif %}
         </td>
         <td>
@@ -165,16 +166,16 @@
         <td>
           <div class="action-buttons">
             {% if chat.status != "closed" %}
-              <a href="{% url 'chat_room' chat.id %}" class="btn btn-open">Открыть</a>
+              <a href="{% url 'chat_room' chat.id %}" class="btn btn-open">{% trans 'Открыть' %}</a>
 
               {% if user.is_staff or user.is_superuser %}
               <form method="post" action="{% url 'close_chat' chat.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-close">Закрыть</button>
+                <button type="submit" class="btn btn-close">{% trans 'Закрыть' %}</button>
               </form>
               {% endif %}
             {% else %}
-              <span class="btn btn-closed">Закрыт</span>
+              <span class="btn btn-closed">{% trans 'Закрыт' %}</span>
             {% endif %}
           </div>
         </td>
@@ -183,7 +184,7 @@
     </tbody>
   </table>
   {% else %}
-    <div class="no-chats">Нет активных чатов</div>
+    <div class="no-chats">{% trans 'Нет активных чатов' %}</div>
   {% endif %}
 </div>
 

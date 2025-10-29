@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 
 {% block content %}
 <style>
@@ -90,7 +91,7 @@
 </style>
 
 <div class="login-container">
-  <div class="login-header">Войти в систему</div>
+  <div class="login-header">{% trans "Войти в систему" %}</div>
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <div>
@@ -101,11 +102,11 @@
       {{ form.password.label_tag }}
       {{ form.password }}
     </div>
-    <input type="submit" value="Войти">
+    <input type="submit" value="{% trans 'Войти' %}">
   </form>
 
   <div class="register-link">
-    <a href="/accounts/signup">Регистрация</a>
+    <a href="/accounts/signup">{% trans "Регистрация" %}</a>
   </div>
 </div>
 {% endblock %}

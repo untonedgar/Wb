@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 {% block content %}
 <style>
   .logout-container {
@@ -54,11 +55,11 @@
 </style>
 
 <div class="logout-container">
-  <h3>Вы действительно хотите выйти из системы?</h3>
+  <h3>{% trans "Вы действительно хотите выйти из системы?" %}</h3>
   <form action="{% url 'logout' %}" method="post">
     {% csrf_token %}
-    <input type="submit" class="logout-btn" value="Подтвердить">
+    <input type="submit" class="logout-btn" value="{% trans 'Подтвердить' %}">
   </form>
-  <a href="/wb" class="cancel-link">Отмена</a>
+  <a href="/wb" class="cancel-link">{% trans 'Отмена' %}</a>
 </div>
 {% endblock %}

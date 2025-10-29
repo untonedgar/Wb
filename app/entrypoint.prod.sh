@@ -17,7 +17,7 @@ then
 
     echo "PostgreSQL запущен и готов к работе."
 fi
-
+python manage.py compilemessages
 # Выполняем миграции
 echo "Выполнение миграций..."
 python manage.py makemigrations

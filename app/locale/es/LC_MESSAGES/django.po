@@ -1,0 +1,232 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-29 08:11+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: .\app\settings.py:134
+msgid "Русский"
+msgstr ""
+
+#: .\app\settings.py:135
+msgid "English"
+msgstr ""
+
+#: .\app\settings.py:136
+msgid "Español"
+msgstr ""
+
+#: .\templates\account\signup.html:74
+msgid "Создать аккаунт"
+msgstr "Crear cuenta"
+
+#: .\templates\account\signup.html:80
+msgid "Зарегистрироваться"
+msgstr "Registrarse"
+
+#: .\templates\account\signup.html:84
+msgid "Уже есть аккаунт?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: .\templates\account\signup.html:85 .\templates\default.html:118
+#: .\templates\login.html:105
+msgid "Войти"
+msgstr "Iniciar sesión"
+
+#: .\templates\chat\chat_list.html:130
+msgid "Чаты поддержки"
+msgstr "Chats de soporte"
+
+#: .\templates\chat\chat_list.html:137
+msgid "Клиент"
+msgstr "Cliente"
+
+#: .\templates\chat\chat_list.html:138
+msgid "Менеджер"
+msgstr "Gerente"
+
+#: .\templates\chat\chat_list.html:139
+msgid "Статус"
+msgstr "Estado"
+
+#: .\templates\chat\chat_list.html:140
+msgid "Последнее сообщение"
+msgstr "Último mensaje"
+
+#: .\templates\chat\chat_list.html:141
+msgid "Действие"
+msgstr "Acción"
+
+#: .\templates\chat\chat_list.html:152
+msgid "Новый"
+msgstr "Nuevo"
+
+#: .\templates\chat\chat_list.html:154
+msgid "В работе"
+msgstr "En progreso"
+
+#: .\templates\chat\chat_list.html:156 .\templates\chat\chat_list.html:178
+msgid "Закрыт"
+msgstr "Cerrado"
+
+#: .\templates\chat\chat_list.html:169
+msgid "Открыть"
+msgstr "Abrir"
+
+#: .\templates\chat\chat_list.html:174
+msgid "Закрыть"
+msgstr "Cerrar"
+
+#: .\templates\chat\chat_list.html:187
+msgid "Нет активных чатов"
+msgstr "No hay chats activos"
+
+#: .\templates\chat\chat_room.html:142
+msgid "Чат"
+msgstr "Chat"
+
+#: .\templates\chat\chat_room.html:156
+msgid "История пуста — здесь будут сообщения чата"
+msgstr "El historial está vacío — aquí aparecerán los mensajes del chat"
+
+#: .\templates\chat\chat_room.html:162
+msgid "Введите сообщение"
+msgstr "Escribe un mensaje"
+
+#: .\templates\chat\chat_room.html:163
+msgid "Отправить"
+msgstr "Enviar"
+
+#: .\templates\chat\support_page.html:70
+msgid "Служба поддержки"
+msgstr "Servicio de soporte"
+
+#: .\templates\chat\support_page.html:74
+msgid "Уважаемый клиент"
+msgstr "Estimado cliente"
+
+#: .\templates\chat\support_page.html:76
+msgid ""
+"Если у вас возникли проблемы или вопросы, вы можете обратиться к "
+"разработчику этого приложения. Ему на почту придёт уведомление, и он ответит "
+"в течение"
+msgstr ""
+"Si tiene algún problema o pregunta, puede ponerse en contacto con el "
+"desarrollador de esta aplicación. Recibirá una notificación por correo "
+"electrónico y responderá dentro de"
+
+#: .\templates\chat\support_page.html:77
+msgid "минут"
+msgstr "minutos"
+
+#: .\templates\chat\support_page.html:80
+msgid "Перейти в чат"
+msgstr "Ir al chat"
+
+#: .\templates\chat\support_page.html:84
+msgid "Помощь всегда рядом"
+msgstr "La ayuda siempre está cerca"
+
+#: .\templates\default.html:114
+msgid "Выйти"
+msgstr "Cerrar sesión"
+
+#: .\templates\default.html:123
+msgid "Парсинг"
+msgstr "Análisis"
+
+#: .\templates\default.html:126
+msgid "Поддержка"
+msgstr "Soporte"
+
+#: .\templates\default.html:130
+msgid "Заявки"
+msgstr "Solicitudes"
+
+#: .\templates\default.html:167
+msgid "Все права защищены"
+msgstr "Todos los derechos reservados"
+
+#: .\templates\default.html:168
+msgid "Создано с ❤️ на Django"
+msgstr "Creado con ❤️ en Django"
+
+#: .\templates\login.html:94
+msgid "Войти в систему"
+msgstr "Iniciar sesión en el sistema"
+
+#: .\templates\login.html:109 .\templates\signup.html:5
+msgid "Регистрация"
+msgstr "Registro"
+
+#: .\templates\logout_confirm.html:58
+msgid "Вы действительно хотите выйти из системы?"
+msgstr "¿Realmente quieres cerrar sesión?"
+
+#: .\templates\logout_confirm.html:61 .\templates\parse.html:20
+#: .\templates\products.html:138 .\templates\statistic.html:138
+msgid "Подтвердить"
+msgstr "Confirmar"
+
+#: .\templates\logout_confirm.html:63
+msgid "Отмена"
+msgstr "Cancelar"
+
+#: .\templates\parse.html:11
+msgid "Введите товары для парсинга"
+msgstr "Introduce los productos para analizar"
+
+#: .\templates\parse.html:14
+msgid "Название товара"
+msgstr "Nombre del producto"
+
+#: .\templates\parse.html:18 .\templates\products.html:136
+#: .\templates\statistic.html:136
+msgid "Например: Сапоги"
+msgstr "Por ejemplo: Сапоги"
+
+#: .\templates\products.html:125 .\templates\statistic.html:125
+msgid "Поиск товаров"
+msgstr "Búsqueda de productos"
+
+#: .\templates\products.html:131 .\templates\statistic.html:131
+msgid "Введите товары для поиска"
+msgstr "Introduce los productos para buscar"
+
+#: .\templates\products.html:151 .\templates\statistic.html:151
+msgid "Артикул"
+msgstr "Artículo"
+
+#: .\templates\products.html:153 .\templates\statistic.html:153
+msgid "Цена"
+msgstr "Precio"
+
+#: .\templates\products.html:154 .\templates\statistic.html:154
+msgid "Старая цена"
+msgstr "Precio anterior"
+
+#: .\templates\products.html:155 .\templates\statistic.html:155
+msgid "Рейтинг"
+msgstr "Calificación"
+
+#: .\templates\products.html:156 .\templates\statistic.html:156
+msgid "Отзывов"
+msgstr "Opiniones"
+
+#: .\templates\signup.html:9
+msgid "Продолжить"
+msgstr "Continuar"

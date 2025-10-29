@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 {% csrf_token %}
 
 
@@ -121,20 +122,20 @@
 
 <main>
     <div class="content-wrapper">
-        <h1 class="page-title">Поиск товаров</h1>
+        <h1 class="page-title">{% trans 'Поиск товаров' %}</h1>
 
         <!-- Поисковая форма -->
         <div class="search-box">
             <form method="get" action="{% url 'product_search' %}">
                 {% csrf_token %}
-                <label for="cityInput">Введите товары для поиска</label>
+                <label for="cityInput">{% trans 'Введите товары для поиска' %}</label>
                 <input type="text"
                        id="cityInput"
                        name="q"
                        value="{{ query|default:'' }}"
-                       placeholder="Например: Сапоги"
+                       placeholder="{% trans 'Например: Сапоги' %}"
                        required>
-                <button type="submit">Подтвердить</button>
+                <button type="submit">{% trans 'Подтвердить' %}</button>
             </form>
         </div>
 
@@ -147,12 +148,12 @@
                         <h6 class="card-title">{{ product.name }}</h6>
                         <div class="card-text">
                             <a href="https://www.wildberries.by/catalog/{{product.article}}/detail.aspx">
-                                <p><strong>Артикул:</strong> {{ product.article }}</p>
+                                <p><strong>{% trans 'Артикул' %}:</strong> {{ product.article }}</p>
                             </a>
-                            <p><strong>Цена:</strong> {{ product.price }}</p>
-                            <p><strong>Старая цена:</strong> {{ product.old_price }}</p>
-                            <p><strong>Рейтинг:</strong> {{ product.rating }}</p>
-                            <p class="text-muted small">Отзывов: {{ product.reviews }}</p>
+                            <p><strong>{% trans 'Цена' %}:</strong> {{ product.price }}</p>
+                            <p><strong>{% trans 'Старая цена' %}:</strong> {{ product.old_price }}</p>
+                            <p><strong>{% trans 'Рейтинг' %}:</strong> {{ product.rating }}</p>
+                            <p class="text-muted small">{% trans 'Отзывов' %}: {{ product.reviews }}</p>
                         </div>
                     </div>
                 </div>

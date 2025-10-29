@@ -1,5 +1,6 @@
-{% extends "default.html" %}
 
+{% extends "default.html" %}
+{% load static i18n %}
 
 
 {% block content %}
@@ -70,18 +71,18 @@
 </style>
 
 <div class="signup-container">
-  <h2>Создать аккаунт</h2>
+  <h2>{% trans 'Создать аккаунт' %}</h2>
 
   <form method="post" action="{% url 'account_signup' %}">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <button type="submit" class="btn-primary">Зарегистрироваться</button>
+    <button type="submit" class="btn-primary">{% trans 'Зарегистрироваться' %}</button>
   </form>
 
   <div class="login-link">
-    Уже есть аккаунт?
-    <a href="/sign/login/">Войти</a>
+    {% trans 'Уже есть аккаунт?' %}
+    <a href="/sign/login/">{% trans 'Войти' %}</a>
   </div>
 </div>
 {% endblock content %}

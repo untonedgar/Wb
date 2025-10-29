@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 {% csrf_token %}
 
 
@@ -138,7 +139,7 @@
 
 <div class="chat-page">
   <div class="chat-wrapper" role="region" aria-label="Chat">
-    <div class="chat-header">💬 Чат №{{ chat.id }}</div>
+    <div class="chat-header">💬 {% trans 'Чат'%} №{{ chat.id }}</div>
 
     <div id="chat-body" class="chat-body" aria-live="polite">
       {% for msg in messages %}
@@ -152,14 +153,14 @@
         </div>
       {% empty %}
         <p id="empty-msg" style="text-align:center;color:#9aa5b1;margin-top:36px;">
-          История пуста — здесь будут сообщения чата.
+          {% trans 'История пуста — здесь будут сообщения чата'%}.
         </p>
       {% endfor %}
     </div>
 
     <div class="chat-input">
-      <input id="message-input" type="text" placeholder="Введите сообщение..." autocomplete="off" />
-      <button id="send-btn" class="btn-send">Отправить</button>
+      <input id="message-input" type="text" placeholder="{% trans 'Введите сообщение' %}..." autocomplete="off" />
+      <button id="send-btn" class="btn-send">{% trans 'Отправить'%}</button>
     </div>
   </div>
 </div>

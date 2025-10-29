@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 {% csrf_token %}
 
 
@@ -9,7 +10,7 @@
     .content-wrapper {
         max-width: 1100px;
         margin: 0 auto;
-        padding: 30px 20px; /* чуть меньше отступов сверху/снизу */
+        padding: 30px 20px;
     }
 
     /* Заголовок */
@@ -19,7 +20,7 @@
         font-weight: 600;
         color: #1e3a8a;
         margin-bottom: 25px;
-        margin-top: 10px; /* небольшой отступ сверху для воздуха */
+        margin-top: 10px;
     }
 
     /* Поисковая форма */
@@ -108,12 +109,12 @@
     }
 
     main {
-        margin-top: 20px; /* раньше было 100px → подвинул вверх */
+        margin-top: 20px;
     }
 
     @media (max-width: 768px) {
         main {
-            margin-top: 80px; /* чуть больше отступа для мобильных */
+            margin-top: 80px;
         }
     }
 </style>
@@ -121,20 +122,20 @@
 
 <main>
     <div class="content-wrapper">
-        <h1 class="page-title">Поиск товаров</h1>
+        <h1 class="page-title">{% trans 'Поиск товаров' %}</h1>
 
         <!-- Поисковая форма -->
         <div class="search-box">
             <form method="get" action="{% url 'product_search' %}">
                 {% csrf_token %}
-                <label for="cityInput">Введите товары для поиска</label>
+                <label for="cityInput">{% trans 'Введите товары для поиска' %}</label>
                 <input type="text"
                        id="cityInput"
                        name="q"
                        value="{{ query|default:'' }}"
-                       placeholder="Например: Сапоги"
+                       placeholder="{% trans 'Например: Сапоги' %}"
                        required>
-                <button type="submit">Подтвердить</button>
+                <button type="submit">{% trans 'Подтвердить' %}</button>
             </form>
         </div>
 
@@ -147,12 +148,12 @@
                         <h6 class="card-title">{{ product.name }}</h6>
                         <div class="card-text">
                             <a href="https://www.wildberries.by/catalog/{{product.article}}/detail.aspx">
-                                <p><strong>Артикул:</strong> {{ product.article }}</p>
+                                <p><strong>{% trans 'Артикул'%}:</strong> {{ product.article }}</p>
                             </a>
-                            <p><strong>Цена:</strong> {{ product.price }}</p>
-                            <p><strong>Старая цена:</strong> {{ product.old_price }}</p>
-                            <p><strong>Рейтинг:</strong> {{ product.rating }}</p>
-                            <p class="text-muted small">Отзывов: {{ product.reviews }}</p>
+                            <p><strong>{% trans 'Цена'%}:</strong> {{ product.price }}</p>
+                            <p><strong>{% trans 'Старая цена'%}:</strong> {{ product.old_price }}</p>
+                            <p><strong>{% trans 'Рейтинг'%}:</strong> {{ product.rating }}</p>
+                            <p class="text-muted small">{% trans 'Отзывов'%}: {{ product.reviews }}</p>
                         </div>
                     </div>
                 </div>

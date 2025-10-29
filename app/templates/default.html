@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Интернет-магазин модных товаров">
+    <meta name="description" content="Wb">
     <meta name="author" content="">
 
     <title>{% block title %}Wb{% endblock title %}</title>
@@ -15,11 +16,82 @@
     <!-- Custom styles -->
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/language-switcher.css' %}" rel="stylesheet">
     <link href="{% static 'css/footer.css' %}" rel="stylesheet">
 </head>
 
 <body>
+<style>
+/* 💠 Стили для переключателя языка */
+.language-form {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
 
+.language-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #ffffff;
+    border: 1px solid #3b82f6;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.language-select:hover {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border-color: #1e3a8a;
+}
+
+.language-select:focus {
+    outline: none;
+    box-shadow: 0 0 4px rgba(59,130,246,0.4);
+}
+
+.navbar {
+  background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
+}
+
+.navbar-brand {
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-nav .nav-link {
+  color: #e2e8f0 !important;
+  font-weight: 500;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.navbar-nav .nav-link.active {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+</style>
     <!-- Навигация -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
         <div class="container">
@@ -39,28 +111,43 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout_confirm' %}">Выйти</a>
+                            <a class="nav-link" href="{% url 'logout_confirm' %}">{% trans "Выйти" %}</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/sign/login/">Войти</a>
+                            <a class="nav-link" href="/sign/login/">{% trans "Войти" %}</a>
                         </li>
                     {% endif %}
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/wb/parser">Парсинг</a>
+                        <a class="nav-link" href="/wb/parser">{% trans "Парсинг" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/support">Поддержка</a>
+                        <a class="nav-link" href="/support">{% trans "Поддержка" %}</a>
                     </li>
                     {% if request.user.is_staff %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/chat_list">Заявки</a>
+                            <a class="nav-link" href="/chat_list">{% trans "Заявки" %}</a>
                         </li>
                     {% endif %}
 
                     {% block navigation %}{% endblock navigation %}
                 </ul>
+<form action="{% url 'set_language' %}" method="post" class="language-form ms-3">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    {% get_available_languages as LANGUAGES %}
+    {% get_language_info_list for LANGUAGES as languages %}
+    {% get_current_language as LANGUAGE_CODE %}
+
+    <select name="language" class="language-select form-select form-select-sm" onchange="this.form.submit()">
+        {% for language in languages %}
+            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                {{ language.name_local }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
             </div>
         </div>
     </nav>
@@ -77,8 +164,8 @@
     <!-- Подвал -->
     <footer class="footer bg-dark text-center text-white py-4 mt-auto">
         <div class="container">
-            <p class="mb-1">© Wb — Все права защищены</p>
-            <small class="text-muted">Создано с ❤️ на Django</small>
+            <p class="mb-1">© Wb — {% trans 'Все права защищены' %}</p>
+            <small class="text-muted">{% trans 'Создано с ❤️ на Django' %}</small>
         </div>
     </footer>
 

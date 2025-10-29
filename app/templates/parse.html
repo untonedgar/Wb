@@ -1,5 +1,6 @@
-{% extends 'default.html' %}
 
+{% extends 'default.html' %}
+{% load i18n %}
 {% csrf_token %}
 
 
@@ -7,16 +8,16 @@
 
 <div class="parser-container">
     <div class="parser-box">
-        <h2 class="parser-title">Введите товары для парсинга</h2>
+        <h2 class="parser-title">{% trans 'Введите товары для парсинга' %}</h2>
         <form method="get" action="">
             {% csrf_token %}
-            <label for="cityInput" class="parser-label">Название товара</label>
+            <label for="cityInput" class="parser-label">{% trans 'Название товара' %}</label>
             <input type="text"
                    id="cityInput"
                    name="user_text"
-                   placeholder="Например: Сапоги"
+                   placeholder="{% trans 'Например: Сапоги' %}"
                    required>
-            <button type="submit">Подтвердить</button>
+            <button type="submit">{% trans 'Подтвердить' %}</button>
         </form>
     </div>
 </div>
